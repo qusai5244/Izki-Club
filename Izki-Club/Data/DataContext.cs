@@ -10,5 +10,8 @@ namespace Izki_Club.Data
         }
 
         public DbSet<Team> Teams { get; set; }
+        public DbSet<Referee> Referees { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Coach> Coachs { get; set; }
     }
 }
