@@ -1,13 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static Izki_Club.Helpers.Enum;
 
 namespace Izki_Club.Models
 {
-    public class GeneralModelBase
+    public class Person
     {
         [Key]
         [Required]
         public int Id { get; set; }
+
+        [Required]
+        public PersonType PersonType { get; set; }
         [Required]
         [StringLength(50)]
         [Column(TypeName = "varchar(255)")]
@@ -26,12 +30,17 @@ namespace Izki_Club.Models
         public string DescriptionAr { get; set; }
         public string ImageUrl { get; set; }
         [Required]
-        public bool IsActive { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        [Required]
+        public bool IsActive { get; set; } = true;
         [Required]
         public bool IsDeleted { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+
+        public int TeamId { get; set; }
+        public Team Team { get; set; }
 
     }
 }
