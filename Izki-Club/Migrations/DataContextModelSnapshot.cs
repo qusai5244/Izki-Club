@@ -22,7 +22,7 @@ namespace Izki_Club.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Izki_Club.Models.Person", b =>
+            modelBuilder.Entity("Izki_Club.Models.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,10 +63,10 @@ namespace Izki_Club.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("PersonType")
+                    b.Property<int>("TeamId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -76,7 +76,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Persons");
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Team", b =>
@@ -128,10 +128,10 @@ namespace Izki_Club.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("Izki_Club.Models.Person", b =>
+            modelBuilder.Entity("Izki_Club.Models.Member", b =>
                 {
                     b.HasOne("Izki_Club.Models.Team", "Team")
-                        .WithMany("Persons")
+                        .WithMany("Members")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -141,7 +141,7 @@ namespace Izki_Club.Migrations
 
             modelBuilder.Entity("Izki_Club.Models.Team", b =>
                 {
-                    b.Navigation("Persons");
+                    b.Navigation("Members");
                 });
 #pragma warning restore 612, 618
         }

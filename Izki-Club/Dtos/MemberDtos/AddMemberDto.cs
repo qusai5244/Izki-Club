@@ -5,10 +5,10 @@ using static Izki_Club.Helpers.Enum;
 
 namespace Izki_Club.Dtos.PlayerDtos
 {
-    public class AddPersonDto : PersonDto
+    public class AddMemberDto : PersonDto
     {
         [Required]
-        public PersonType PersonType { get; set; }
+        public MemberType PersonType { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

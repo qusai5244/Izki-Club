@@ -4,10 +4,10 @@ using static Izki_Club.Helpers.Enum;
 
 namespace Izki_Club.Dtos.PlayerDtos
 {
-    public class UpdatePersonDto : PersonDto
+    public class UpdateMemberDto : PersonDto
     {
         [Required]
-        public PersonType PersonType { get; set; }
+        public MemberType PersonType { get; set; }
         [Required]
         public int Id { get; set; }
 

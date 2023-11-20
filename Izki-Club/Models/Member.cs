@@ -4,14 +4,14 @@ using static Izki_Club.Helpers.Enum;
 
 namespace Izki_Club.Models
 {
-    public class Person
+    public class Member
     {
         [Key]
         [Required]
         public int Id { get; set; }
 
         [Required]
-        public PersonType PersonType { get; set; }
+        public MemberType Type { get; set; }
         [Required]
         [StringLength(50)]
         [Column(TypeName = "varchar(255)")]

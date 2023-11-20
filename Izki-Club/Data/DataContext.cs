@@ -10,13 +10,13 @@ namespace Izki_Club.Data
         }
 
         public DbSet<Team> Teams { get; set; }
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<Member> Members { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Person>()
+            modelBuilder.Entity<Member>()
                 .HasOne<Team>(s => s.Team)
-                .WithMany(g => g.Persons)
+                .WithMany(g => g.Members)
                 .HasForeignKey(s => s.TeamId)
                 .IsRequired();
         }

@@ -5,9 +5,9 @@ using static Izki_Club.Helpers.Enum;
 
 namespace Izki_Club.Dtos.PlayerDtos
 {
-    public class ViewPersonDto : PersonDto
+    public class ViewMemberDto : PersonDto
     {
-        public PersonType PersonType { get; set; }
+        public MemberType PersonType { get; set; }
         public int Id { get; set; }
         public bool IsActive { get; set; }
         public int Age { get; set; }

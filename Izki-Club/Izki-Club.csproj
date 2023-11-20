@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Dtos\TeamDtos\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Public\Images\" />
   </ItemGroup>
 

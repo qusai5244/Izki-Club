@@ -8,12 +8,12 @@ namespace Izki_Club.Helpers
     public class Mapper
     {
 
-        public static ViewPersonDto PersonToPersonDto(Person input)
+        public static ViewMemberDto MemberToMemberDto(Member input)
         {
-            return new ViewPersonDto
+            return new ViewMemberDto
             {
                 Id = input.Id,
-                PersonType = input.PersonType,
+                PersonType = input.Type,
                 NameEn = input.NameEn,
                 NameAr = input.NameAr,
                 DescriptionEn = input.DescriptionEn,
@@ -26,11 +26,11 @@ namespace Izki_Club.Helpers
             };
         }
 
-        public static Person PersonDtoToPerson(AddPersonDto input)
+        public static Member MemberDtoToMember(AddMemberDto input)
         {
-            return new Person
+            return new Member
             {
-                PersonType = input.PersonType,
+                Type = input.PersonType,
                 DateOfBirth = input.DateOfBirth,
                 NameEn = input.NameEn,
                 NameAr = input.NameAr,
