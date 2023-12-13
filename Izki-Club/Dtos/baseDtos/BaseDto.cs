@@ -3,7 +3,7 @@ using static Izki_Club.Helpers.Enum;
 
 namespace Izki_Club.Dtos.baseDtos
 {
-    public class PersonDto // this is for Coach, Player Models (all of them have the same properties)
+    public class BaseDto // this is for Coach, Player Models (all of them have the same properties)
     {
 
         [Required]

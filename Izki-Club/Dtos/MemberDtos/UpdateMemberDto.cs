@@ -4,12 +4,8 @@ using static Izki_Club.Helpers.Enum;
 
 namespace Izki_Club.Dtos.PlayerDtos
 {
-    public class UpdatePersonDto : PersonDto
+    public class UpdateMemberDto : BaseDto
     {
-        [Required]
-        public PersonType PersonType { get; set; }
-        [Required]
-        public int Id { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
@@ -19,5 +15,8 @@ namespace Izki_Club.Dtos.PlayerDtos
         [Required]
         public bool IsActive { get; set; }
         public IFormFile Image { get; set; }
+
+        [Required]
+        public int TeamId { get; set; }
     }
 }

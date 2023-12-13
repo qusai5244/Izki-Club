@@ -2,11 +2,10 @@
 {
     public class Enum
     {
-        public enum PersonType
+        public enum MemberType
         {
             Player = 1,
             Coach = 2,
-            Referee = 3
         }
     }
 }

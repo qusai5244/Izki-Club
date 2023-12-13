@@ -5,10 +5,10 @@ using static Izki_Club.Helpers.Enum;
 
 namespace Izki_Club.Dtos.PlayerDtos
 {
-    public class AddPersonDto : PersonDto
+    public class AddMemberDto : BaseDto
     {
         [Required]
-        public PersonType PersonType { get; set; }
+        public MemberType MemberType { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -17,5 +17,8 @@ namespace Izki_Club.Dtos.PlayerDtos
         [Required]
         [DataType(DataType.Upload)]
         public IFormFile Image { get; set; }
+
+        [Required]
+        public int TeamId { get; set; }
     }
 }

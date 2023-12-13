@@ -10,15 +10,19 @@ namespace Izki_Club.Data
         }
 
         public DbSet<Team> Teams { get; set; }
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<Referee> Referees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Person>()
-                .HasOne<Team>(s => s.Team)
-                .WithMany(g => g.Persons)
+            modelBuilder.Entity<Member>()
+                .HasOne(s => s.Team)
+                .WithMany(g => g.Members)
                 .HasForeignKey(s => s.TeamId)
                 .IsRequired();
+
+            modelBuilder.Entity<Member>()
+                .HasQueryFilter(m => !m.IsDeleted);
         }
     }
 }

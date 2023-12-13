@@ -5,14 +5,15 @@ using static Izki_Club.Helpers.Enum;
 
 namespace Izki_Club.Dtos.PlayerDtos
 {
-    public class ViewPersonDto : PersonDto
+    public class ViewMemberDto : BaseDto
     {
-        public PersonType PersonType { get; set; }
+        public string MemberType { get; set; }
         public int Id { get; set; }
         public bool IsActive { get; set; }
         public int Age { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public string Image { get; set; }
+        public int TeamId { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 namespace Izki_Club.Migrations
 {
     /// <inheritdoc />
-    public partial class change_teamId_to_nullable : Migration
+    public partial class UpdateMemberFilter : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
