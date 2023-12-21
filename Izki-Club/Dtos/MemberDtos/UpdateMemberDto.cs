@@ -1,6 +1,6 @@
 ﻿using Izki_Club.Dtos.baseDtos;
 using System.ComponentModel.DataAnnotations;
-using static Izki_Club.Helpers.Enum;
+using static Izki_Club.Enums.Member.MemberTypeEnum;
 
 namespace Izki_Club.Dtos.PlayerDtos
 {

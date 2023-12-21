@@ -15,7 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionLaptop"));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionPc"));
     });
 
 var app = builder.Build();

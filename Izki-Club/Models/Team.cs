@@ -1,4 +1,4 @@
-﻿using static Izki_Club.Helpers.Enum;
+﻿using static Izki_Club.Enums.Member.MemberTypeEnum;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 

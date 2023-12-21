@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
-using static Izki_Club.Helpers.Enum;
+using static Izki_Club.Enums.Member.MemberTypeEnum;
 
 namespace Izki_Club.Models
 {
@@ -9,8 +9,7 @@ namespace Izki_Club.Models
     {
         [Required]
         public MemberType MemberType { get; set; }
-        [Required]
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
         public Team Team { get; set; }
 
     }

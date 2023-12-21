@@ -7,7 +7,7 @@ using Izki_Club.Helpers;
 using Izki_Club.Models;
 using Izki_Club.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using static Izki_Club.Helpers.Enum;
+using static Izki_Club.Enums.Member.MemberTypeEnum;
 
 namespace Izki_Club.Services
 {
@@ -23,11 +23,19 @@ namespace Izki_Club.Services
         {
             try
             {
-                var team = await _context.Teams.AnyAsync(x => x.Id == input.TeamId && !x.IsDeleted);
-
-                if (!team)
+                if(input.MemberType != MemberType.Referee && input.TeamId is 0)
                 {
-                    return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.NotFound, "Team not found", null);
+                    return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.BadRequest, "TeamId is required ", null);
+                }
+
+                if (input.TeamId is not 0)
+                {
+                    var team = await _context.Teams.AnyAsync(x => x.Id == input.TeamId && !x.IsDeleted);
+
+                    if (!team)
+                    {
+                        return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.NotFound, "Team not found", null);
+                    }
                 }
 
                 var member = Mapper.MemberDtoToMember(input);

@@ -1,11 +1,12 @@
-﻿namespace Izki_Club.Helpers
+﻿namespace Izki_Club.Enums.Member
 {
-    public class Enum
+    public class MemberTypeEnum
     {
         public enum MemberType
         {
             Player = 1,
             Coach = 2,
+            Referee = 3,
         }
     }
 }

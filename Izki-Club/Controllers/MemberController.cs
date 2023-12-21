@@ -3,7 +3,7 @@ using Izki_Club.Dtos.PlayerDtos;
 using Izki_Club.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static Izki_Club.Helpers.Enum;
+using static Izki_Club.Enums.Member.MemberTypeEnum;
 
 namespace Izki_Club.Controllers
 {

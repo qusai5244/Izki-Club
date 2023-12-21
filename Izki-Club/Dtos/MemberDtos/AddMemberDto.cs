@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Izki_Club.Dtos.baseDtos;
-using static Izki_Club.Helpers.Enum;
+using static Izki_Club.Enums.Member.MemberTypeEnum;
 
 namespace Izki_Club.Dtos.PlayerDtos
 {
@@ -18,7 +18,6 @@ namespace Izki_Club.Dtos.PlayerDtos
         [DataType(DataType.Upload)]
         public IFormFile Image { get; set; }
 
-        [Required]
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
     }
 }

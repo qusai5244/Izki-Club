@@ -1,7 +1,7 @@
 ﻿using Izki_Club.Dtos.GeneralDtos;
 using Izki_Club.Dtos.PlayerDtos;
 using Izki_Club.Dtos.TeamDtos;
-using static Izki_Club.Helpers.Enum;
+using static Izki_Club.Enums.Member.MemberTypeEnum;
 
 namespace Izki_Club.Services.Interfaces
 {
