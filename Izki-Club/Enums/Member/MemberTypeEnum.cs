@@ -6,7 +6,7 @@
         {
             Player = 1,
             Coach = 2,
-            Referee = 3,
+            //Referee = 3,
         }
     }
 }

@@ -18,6 +18,6 @@ namespace Izki_Club.Dtos.PlayerDtos
         [DataType(DataType.Upload)]
         public IFormFile Image { get; set; }
 
-        public int? TeamId { get; set; }
+        public int TeamId { get; set; }
     }
 }

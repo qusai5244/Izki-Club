@@ -41,7 +41,7 @@ namespace Izki_Club.Helpers
                 ImageUrl = ImageProcess.UploadImage(input.Image),
                 IsActive = true,
                 CreatedAt = DateTime.Now,
-                TeamId = input.TeamId,
+                TeamId = (int)input.TeamId,
             };
         }
 

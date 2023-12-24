@@ -9,7 +9,7 @@ namespace Izki_Club.Models
     {
         [Required]
         public MemberType MemberType { get; set; }
-        public int? TeamId { get; set; }
+        public int TeamId { get; set; } = 0;
         public Team Team { get; set; }
 
     }

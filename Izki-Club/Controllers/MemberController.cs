@@ -1,4 +1,5 @@
 ﻿using Izki_Club.Dtos.GeneralDtos;
+using Izki_Club.Dtos.MemberDtos;
 using Izki_Club.Dtos.PlayerDtos;
 using Izki_Club.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +35,7 @@ namespace Izki_Club.Controllers
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(ApiResponse<PaginatedList<ViewMemberDto>>))]
-        public async Task<IActionResult> GetMembers([FromQuery] SearchAndPaginationDto input)
+        public async Task<IActionResult> GetMembers([FromQuery] ViewMembersByType input)
         {
 
             if (!ModelState.IsValid)

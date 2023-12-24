@@ -1,5 +1,6 @@
 ﻿using Izki_Club.Data;
 using Izki_Club.Dtos.GeneralDtos;
+using Izki_Club.Dtos.MemberDtos;
 using Izki_Club.Dtos.PlayerDtos;
 using Izki_Club.Dtos.TeamDtos;
 using Izki_Club.Enums.General;
@@ -23,10 +24,6 @@ namespace Izki_Club.Services
         {
             try
             {
-                if(input.MemberType != MemberType.Referee && input.TeamId is 0)
-                {
-                    return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.BadRequest, "TeamId is required ", null);
-                }
 
                 if (input.TeamId is not 0)
                 {
@@ -106,7 +103,7 @@ namespace Izki_Club.Services
             }
         }
 
-        public async Task<ApiResponse<PaginatedList<ViewMemberDto>>> GetMembers(SearchAndPaginationDto input)
+        public async Task<ApiResponse<PaginatedList<ViewMemberDto>>> GetMembers(ViewMembersByType input)
         {
             try
             {
@@ -120,6 +117,11 @@ namespace Izki_Club.Services
                 if (!string.IsNullOrEmpty(input.SearchAr))
                 {
                     query = query.Where(x => x.NameAr.Contains(input.SearchAr));
+                }
+
+                if (input.memberType is not 0)
+                {
+                    query = query.Where(x => x.MemberType == input.memberType);
                 }
 
                 var membersToReturn = await query

@@ -14,6 +14,6 @@ namespace Izki_Club.Dtos.PlayerDtos
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public string Image { get; set; }
-        public int? TeamId { get; set; }
+        public int TeamId { get; set; } = 0;
     }
 }
