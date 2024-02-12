@@ -77,7 +77,7 @@ namespace Izki_Club.Helpers
             };
         }
 
-        private static int CalculateAge(DateTime dateOfBirth)
+        public static int CalculateAge(DateTime dateOfBirth)
         {
             DateTime currentDate = DateTime.UtcNow;
             int age = currentDate.Year - dateOfBirth.Year;

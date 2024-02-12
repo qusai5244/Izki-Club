@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Izki_Club.Dtos.baseDtos;
 using static Izki_Club.Enums.Member.MemberTypeEnum;
+using Izki_Club.Models;
 
 namespace Izki_Club.Dtos.PlayerDtos
 {
@@ -14,6 +15,7 @@ namespace Izki_Club.Dtos.PlayerDtos
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public string Image { get; set; }
-        public int TeamId { get; set; } = 0;
+        public int TeamId { get; set; }
+        public Team team { get; set; }
     }
 }
