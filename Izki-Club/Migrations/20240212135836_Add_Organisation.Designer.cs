@@ -4,6 +4,7 @@ using Izki_Club.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Izki_Club.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240212135836_Add_Organisation")]
+    partial class Add_Organisation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +82,7 @@ namespace Izki_Club.Migrations
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("Izki_Club.Models.Organization", b =>
+            modelBuilder.Entity("Izki_Club.Models.Organisation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -166,15 +169,15 @@ namespace Izki_Club.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("organisationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganizationId");
+                    b.HasIndex("organisationId");
 
                     b.ToTable("Referees");
                 });
@@ -220,94 +223,17 @@ namespace Izki_Club.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("organisationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganizationId");
+                    b.HasIndex("organisationId");
 
                     b.ToTable("Teams");
-                });
-
-            modelBuilder.Entity("Izki_Club.Models.Tournament", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DescriptionAr")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("DescriptionEn")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("tournamentStatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.ToTable("Tournaments");
-                });
-
-            modelBuilder.Entity("Izki_Club.Models.TournamentTeam", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TournamentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeamId");
-
-                    b.HasIndex("TournamentId");
-
-                    b.ToTable("TournamentTeams");
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Member", b =>
@@ -323,75 +249,36 @@ namespace Izki_Club.Migrations
 
             modelBuilder.Entity("Izki_Club.Models.Referee", b =>
                 {
-                    b.HasOne("Izki_Club.Models.Organization", "Organization")
+                    b.HasOne("Izki_Club.Models.Organisation", "Organisation")
                         .WithMany("Referees")
-                        .HasForeignKey("OrganizationId")
+                        .HasForeignKey("organisationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Organization");
+                    b.Navigation("Organisation");
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Team", b =>
                 {
-                    b.HasOne("Izki_Club.Models.Organization", "Organization")
+                    b.HasOne("Izki_Club.Models.Organisation", "Organisation")
                         .WithMany("Teams")
-                        .HasForeignKey("OrganizationId")
+                        .HasForeignKey("organisationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Organization");
+                    b.Navigation("Organisation");
                 });
 
-            modelBuilder.Entity("Izki_Club.Models.Tournament", b =>
-                {
-                    b.HasOne("Izki_Club.Models.Organization", "Organization")
-                        .WithMany("Tournaments")
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Organization");
-                });
-
-            modelBuilder.Entity("Izki_Club.Models.TournamentTeam", b =>
-                {
-                    b.HasOne("Izki_Club.Models.Team", "Team")
-                        .WithMany("TournamentTeams")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Izki_Club.Models.Tournament", "Tournament")
-                        .WithMany("TournamentTeams")
-                        .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Team");
-
-                    b.Navigation("Tournament");
-                });
-
-            modelBuilder.Entity("Izki_Club.Models.Organization", b =>
+            modelBuilder.Entity("Izki_Club.Models.Organisation", b =>
                 {
                     b.Navigation("Referees");
 
                     b.Navigation("Teams");
-
-                    b.Navigation("Tournaments");
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Team", b =>
                 {
                     b.Navigation("Members");
-
-                    b.Navigation("TournamentTeams");
-                });
-
-            modelBuilder.Entity("Izki_Club.Models.Tournament", b =>
-                {
-                    b.Navigation("TournamentTeams");
                 });
 #pragma warning restore 612, 618
         }

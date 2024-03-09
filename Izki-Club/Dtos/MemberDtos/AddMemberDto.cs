@@ -14,9 +14,7 @@ namespace Izki_Club.Dtos.PlayerDtos
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
 
-        [Required]
-        [DataType(DataType.Upload)]
-        public IFormFile Image { get; set; }
+        public string Image { get; set; }
 
         public int TeamId { get; set; }
     }

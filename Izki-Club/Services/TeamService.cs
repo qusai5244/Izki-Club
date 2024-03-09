@@ -26,6 +26,14 @@ namespace Izki_Club.Services
         {
             try
             {
+                var organization = await _context.Organizations.FirstOrDefaultAsync(o=> o.Id == input.OrganizationId);
+
+                if (organization == null)
+                {
+                    return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.NotFound, $"Organization not found", null);
+
+                }
+
                 var team = Mapper.TeamDtoToTeam(input);
 
                 _context.Teams.Add(team);

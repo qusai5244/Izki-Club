@@ -43,7 +43,6 @@ namespace Izki_Club.Services
                     NameEn = r.NameEn,
                     NameAr = r.NameAr,
                     IsActive = r.IsActive,
-                    IsDeleted = r.IsDeleted,
                     Age = Mapper.CalculateAge(r.DateOfBirth),
                     Image = r.ImageUrl,
                     CreatedAt = r.CreatedAt,
@@ -75,7 +74,6 @@ namespace Izki_Club.Services
                         NameEn = r.NameEn,
                         NameAr = r.NameAr,
                         IsActive = r.IsActive,
-                        IsDeleted = r.IsDeleted,
                         Age = Mapper.CalculateAge(r.DateOfBirth),
                         Image = r.ImageUrl,
                         CreatedAt = r.CreatedAt,
@@ -101,7 +99,13 @@ namespace Izki_Club.Services
         {
             try
             {
+                var organisation = _context.Organizations.FirstOrDefault(o => o.Id == input.OrganizationId);
 
+                if (organisation == null)
+                {
+                    return new ApiResponse<ViewRefereeDto>(false, (int)ResponseCodeEnum.NotFound, $"organisation not found", null);
+
+                }
                 var referee = new Referee
                 {
                     NameAr = input.NameAr,
@@ -109,9 +113,10 @@ namespace Izki_Club.Services
                     DescriptionAr = input.DescriptionAr,
                     DescriptionEn = input.DescriptionEn,
                     DateOfBirth = input.DateOfBirth,
-                    ImageUrl = ImageProcess.UploadImage(input.Image),
+                    ImageUrl = input.ImageUrl,
                     IsActive = true,
                     IsDeleted = false,
+                    OrganizationId = input.OrganizationId
                 };
 
                 _context.Referees.Add(referee);
@@ -124,7 +129,6 @@ namespace Izki_Club.Services
                     NameEn = referee.NameEn,
                     NameAr = referee.NameAr,
                     IsActive = referee.IsActive,
-                    IsDeleted = referee.IsDeleted,
                     Age = Mapper.CalculateAge(referee.DateOfBirth),
                     Image = referee.ImageUrl,
                     CreatedAt = referee.CreatedAt,
@@ -160,7 +164,7 @@ namespace Izki_Club.Services
                 referee.DescriptionAr = input.DescriptionAr;
                 referee.DescriptionEn = input.DescriptionEn;
                 referee.DateOfBirth = input.DateOfBirth;
-                referee.ImageUrl = ImageProcess.UploadImage(input.Image);
+                referee.ImageUrl = input.ImageUrl;
                 referee.IsActive = input.IsActive;
                 referee.UpdatedAt = DateTime.Now;
 
@@ -174,7 +178,6 @@ namespace Izki_Club.Services
                     NameEn = referee.NameEn,
                     NameAr = referee.NameAr,
                     IsActive = referee.IsActive,
-                    IsDeleted = referee.IsDeleted,
                     Age = Mapper.CalculateAge(referee.DateOfBirth),
                     Image = referee.ImageUrl,
                     CreatedAt = referee.CreatedAt,
@@ -212,7 +215,6 @@ namespace Izki_Club.Services
                     NameEn = referee.NameEn,
                     NameAr = referee.NameAr,
                     IsActive = referee.IsActive,
-                    IsDeleted = referee.IsDeleted,
                     Age = Mapper.CalculateAge(referee.DateOfBirth),
                     Image = referee.ImageUrl,
                     CreatedAt = referee.CreatedAt,

@@ -4,6 +4,7 @@ using Izki_Club.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Izki_Club.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240212165640_Add_Tournament_And_TournamentTeams")]
+    partial class Add_Tournament_And_TournamentTeams
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,15 +169,15 @@ namespace Izki_Club.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("organisationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganizationId");
+                    b.HasIndex("organisationId");
 
                     b.ToTable("Referees");
                 });
@@ -220,15 +223,15 @@ namespace Izki_Club.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("organizationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("OrganizationId");
+                    b.HasIndex("organizationId");
 
                     b.ToTable("Teams");
                 });
@@ -323,20 +326,20 @@ namespace Izki_Club.Migrations
 
             modelBuilder.Entity("Izki_Club.Models.Referee", b =>
                 {
-                    b.HasOne("Izki_Club.Models.Organization", "Organization")
+                    b.HasOne("Izki_Club.Models.Organization", "Organisation")
                         .WithMany("Referees")
-                        .HasForeignKey("OrganizationId")
+                        .HasForeignKey("organisationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Organization");
+                    b.Navigation("Organisation");
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Team", b =>
                 {
                     b.HasOne("Izki_Club.Models.Organization", "Organization")
                         .WithMany("Teams")
-                        .HasForeignKey("OrganizationId")
+                        .HasForeignKey("organizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -345,32 +348,32 @@ namespace Izki_Club.Migrations
 
             modelBuilder.Entity("Izki_Club.Models.Tournament", b =>
                 {
-                    b.HasOne("Izki_Club.Models.Organization", "Organization")
+                    b.HasOne("Izki_Club.Models.Organization", "organization")
                         .WithMany("Tournaments")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Organization");
+                    b.Navigation("organization");
                 });
 
             modelBuilder.Entity("Izki_Club.Models.TournamentTeam", b =>
                 {
-                    b.HasOne("Izki_Club.Models.Team", "Team")
+                    b.HasOne("Izki_Club.Models.Team", "team")
                         .WithMany("TournamentTeams")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Izki_Club.Models.Tournament", "Tournament")
+                    b.HasOne("Izki_Club.Models.Tournament", "tournament")
                         .WithMany("TournamentTeams")
                         .HasForeignKey("TournamentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Team");
+                    b.Navigation("team");
 
-                    b.Navigation("Tournament");
+                    b.Navigation("tournament");
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Organization", b =>

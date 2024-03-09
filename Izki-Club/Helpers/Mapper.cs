@@ -23,6 +23,7 @@ namespace Izki_Club.Helpers
                 IsActive = input.IsActive,
                 Age = CalculateAge(input.DateOfBirth),
                 TeamId = input.TeamId,
+                Team = input.Team,
                 CreatedAt = input.CreatedAt,
                 UpdatedAt = input.UpdatedAt,
             };
@@ -38,10 +39,11 @@ namespace Izki_Club.Helpers
                 NameAr = input.NameAr,
                 DescriptionEn = input.DescriptionEn,
                 DescriptionAr = input.DescriptionAr,
-                ImageUrl = ImageProcess.UploadImage(input.Image),
+                ImageUrl = input.Image,
                 IsActive = true,
                 CreatedAt = DateTime.Now,
                 TeamId = (int)input.TeamId,
+                
             };
         }
 
@@ -73,7 +75,8 @@ namespace Izki_Club.Helpers
                 IsActive = true,
                 FoundDate = input.FoundDate,
                 CreatedAt = DateTime.Now,
-                ImageUrl = ImageProcess.UploadImage(input.Image),
+                ImageUrl = input.ImageUrl,
+                OrganizationId = input.OrganizationId
             };
         }
 

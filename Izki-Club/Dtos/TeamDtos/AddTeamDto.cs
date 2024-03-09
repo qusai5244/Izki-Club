@@ -8,9 +8,9 @@ namespace Izki_Club.Dtos.TeamDtos
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime FoundDate { get; set; }
+        public string ImageUrl { get; set; }
 
         [Required]
-        [DataType(DataType.Upload)]
-        public IFormFile Image { get; set; }
+        public int OrganizationId { get; set; }
     }
 }

@@ -1,10 +1,10 @@
-﻿using static Izki_Club.Enums.Member.MemberTypeEnum;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+using static Izki_Club.Enums.Tournament.TournamentEnum;
 
 namespace Izki_Club.Models
 {
-    public class Team
+    public class Tournament
     {
         [Key]
         [Required]
@@ -19,27 +19,26 @@ namespace Izki_Club.Models
         [Column(TypeName = "nvarchar(255)")]
         public string NameAr { get; set; }
 
-        [StringLength(500)] // Set the maximum length as needed
-        [Column(TypeName = "varchar(500)")] // Set the database column type
+        [StringLength(500)] 
+        [Column(TypeName = "varchar(500)")] 
         public string DescriptionEn { get; set; }
 
-        [StringLength(500)] // Set the maximum length as needed
-        [Column(TypeName = "nvarchar(500)")] // Set the database column type for Unicode (Arabic)
+        [StringLength(500)] 
+        [Column(TypeName = "nvarchar(500)")] 
         public string DescriptionAr { get; set; }
+        [Required]
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public TournamentStatus tournamentStatus { get; set; } = TournamentStatus.Upcoming;
         public string ImageUrl { get; set; }
-        [Required]
-        public DateTime FoundDate{ get; set; }
-        [Required]
-        public bool IsActive { get; set; } = true;
-        [Required]
-        public bool IsDeleted { get; set; }
-        [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
-        public ICollection<Member> Members { get; set; }
+        [Required]
         public int OrganizationId { get; set; }
         public Organization Organization { get; set; }
 
         public ICollection<TournamentTeam> TournamentTeams { get; set; }
+
+
     }
 }

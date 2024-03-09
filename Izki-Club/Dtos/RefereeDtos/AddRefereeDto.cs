@@ -10,10 +10,13 @@ namespace Izki_Club.Dtos.RefereeDtos
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
+        public string ImageUrl { get; set; }
 
         [Required]
-        [DataType(DataType.Upload)]
-        public IFormFile Image { get; set; }
+        public int OrganizationId { get; set; }
+
+        public bool isActive { get; set; } = true;
+        public bool isDeleted { get; set; } = false;
 
     }
 }

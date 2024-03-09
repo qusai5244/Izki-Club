@@ -24,12 +24,12 @@ namespace Izki_Club.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMember([FromForm] AddRefereeDto input)
         {
-            var response = await _refereeService.CreatReferee(input);
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var response = await _refereeService.CreatReferee(input);
 
             return Ok(response);
         }
@@ -37,7 +37,6 @@ namespace Izki_Club.Controllers
         [ProducesResponseType(200, Type = typeof(ApiResponse<PaginatedList<ViewMemberDto>>))]
         public async Task<IActionResult> GetMembers([FromBody] SearchAndPaginationDto input)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -51,7 +50,6 @@ namespace Izki_Club.Controllers
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetMember([FromRoute] int Id)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -78,12 +76,12 @@ namespace Izki_Club.Controllers
         [HttpDelete("{Id}")]
         public async Task<IActionResult> DeleteMember([FromRoute] int Id)
         {
-            var response = await _refereeService.DeleteReferee(Id);
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var response = await _refereeService.DeleteReferee(Id);
 
             return Ok(response);
         }
