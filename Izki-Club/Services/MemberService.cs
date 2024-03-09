@@ -109,14 +109,11 @@ namespace Izki_Club.Services
             {
                 var query = _context.Members.Where(x => !x.IsDeleted).AsNoTracking().AsQueryable();
 
-                if (!string.IsNullOrEmpty(input.SearchEn))
+                if (input.Search is not null)
                 {
-                    query = query.Where(x => x.NameEn.Contains(input.SearchEn));
-                }
-
-                if (!string.IsNullOrEmpty(input.SearchAr))
-                {
-                    query = query.Where(x => x.NameAr.Contains(input.SearchAr));
+                    query = query
+                            .Where(t => t.NameAr.Contains(input.Search)
+                                        || t.NameEn.Contains(input.Search));
                 }
 
                 if (input.memberType is not 0)

@@ -158,14 +158,12 @@ namespace Izki_Club.Services
         private IQueryable<Team> FilterQuery(IQueryable<Team> query, SearchAndPaginationDto input)
         {
 
-            if (!string.IsNullOrEmpty(input.SearchEn))
-            {
-                query = query.Where(x => x.NameEn.Contains(input.SearchEn));
-            }
 
-            if (!string.IsNullOrEmpty(input.SearchAr))
+            if (input.Search is not null)
             {
-                query = query.Where(x => x.NameAr.Contains(input.SearchAr));
+                query = query
+                        .Where(t => t.NameAr.Contains(input.Search)
+                                    || t.NameEn.Contains(input.Search));
             }
 
             return query;
