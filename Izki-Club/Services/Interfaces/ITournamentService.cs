@@ -7,6 +7,7 @@ namespace Izki_Club.Services.Interfaces
     public interface ITournamentService
     {
         Task<ApiResponse<string>> CreateTournament(AddTournamentDto input);
+        Task<ApiResponse<ViewTournamentDto>> GetTournament(int id);
         Task<ApiResponse<PaginatedList<ViewTournamentDto>>> GetTournaments(GetTournamentDto input);
     }
 }

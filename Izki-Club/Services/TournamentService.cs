@@ -112,6 +112,45 @@ namespace Izki_Club.Services
                 return new ApiResponse<PaginatedList<ViewTournamentDto>>(false, 500, $"Error in GetTournaments: {ex.Message}", null);
             }
         }
+        public async Task<ApiResponse<ViewTournamentDto>> GetTournament(int id)
+        {
+            try
+            {
+                var tournament = await _context
+                                        .Tournaments
+                                        .AsNoTracking()
+                                        .Where(t => t.Id == id)
+                                        .Select(t => new ViewTournamentDto
+                                        {
+                                            Id = t.Id,
+                                            NameAr = t.NameAr,
+                                            NameEn = t.NameEn,
+                                            DescriptionAr = t.DescriptionAr,
+                                            DescriptionEn = t.DescriptionEn,
+                                            StartDate = t.StartDate,
+                                            EndDate = t.EndDate,
+                                            tournamentStatus = t.tournamentStatus,
+                                            ImageUrl = t.ImageUrl,
+                                            CreatedAt = t.CreatedAt,
+                                            UpdatedAt = t.UpdatedAt,
+                                        })
+                                        .FirstOrDefaultAsync();
+
+                if (tournament == null)
+                {
+                    return new ApiResponse<ViewTournamentDto>(false, (int)ResponseCodeEnum.NotFound,  "Tournament Not Found", null);
+                }
+
+                var response = new ApiResponse<ViewTournamentDto>(true, 200, "Tournaments data retrieved successfully", tournament);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<ViewTournamentDto>(false, 500, $"Error in GetTournaments: {ex.Message}", null);
+            }
+        }
+
 
 
     }

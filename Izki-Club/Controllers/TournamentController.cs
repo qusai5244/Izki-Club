@@ -33,7 +33,7 @@ namespace Izki_Club.Controllers
         }        
         
         [HttpGet]
-        public async Task<IActionResult> GetTournament([FromBody] GetTournamentDto input)
+        public async Task<IActionResult> GetTournaments([FromBody] GetTournamentDto input)
         {
             if (!ModelState.IsValid)
             {
@@ -41,6 +41,14 @@ namespace Izki_Club.Controllers
             }
 
             var response = await _tournamentService.GetTournaments(input);
+
+            return Ok(response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTournament([FromRoute] int id)
+        {
+            var response = await _tournamentService.GetTournament(id);
 
             return Ok(response);
         }
