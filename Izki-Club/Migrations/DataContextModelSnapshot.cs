@@ -74,8 +74,6 @@ namespace Izki_Club.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeamId");
-
                     b.ToTable("Members");
                 });
 
@@ -123,60 +121,6 @@ namespace Izki_Club.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Organizations");
-                });
-
-            modelBuilder.Entity("Izki_Club.Models.Referee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DescriptionAr")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("DescriptionEn")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.ToTable("Referees");
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Team", b =>
@@ -316,28 +260,6 @@ namespace Izki_Club.Migrations
                     b.ToTable("TournamentTeams");
                 });
 
-            modelBuilder.Entity("Izki_Club.Models.Member", b =>
-                {
-                    b.HasOne("Izki_Club.Models.Team", "Team")
-                        .WithMany("Members")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Team");
-                });
-
-            modelBuilder.Entity("Izki_Club.Models.Referee", b =>
-                {
-                    b.HasOne("Izki_Club.Models.Organization", "Organization")
-                        .WithMany("Referees")
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Organization");
-                });
-
             modelBuilder.Entity("Izki_Club.Models.Team", b =>
                 {
                     b.HasOne("Izki_Club.Models.Organization", "Organization")
@@ -381,8 +303,6 @@ namespace Izki_Club.Migrations
 
             modelBuilder.Entity("Izki_Club.Models.Organization", b =>
                 {
-                    b.Navigation("Referees");
-
                     b.Navigation("Teams");
 
                     b.Navigation("Tournaments");
@@ -390,8 +310,6 @@ namespace Izki_Club.Migrations
 
             modelBuilder.Entity("Izki_Club.Models.Team", b =>
                 {
-                    b.Navigation("Members");
-
                     b.Navigation("TournamentTeams");
                 });
 
