@@ -18,74 +18,74 @@ namespace Izki_Club.Controllers
             _teamService = teamService;
         }
 
-        [HttpGet]
-        [ProducesResponseType(200, Type = typeof(ApiResponse<PaginatedList<ViewTeamDto>>))]
-        public async Task<IActionResult> GetTeams([FromQuery] SearchAndPaginationDto input)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpGet]
+        //[ProducesResponseType(200, Type = typeof(ApiResponse<PaginatedList<ViewTeamDto>>))]
+        //public async Task<IActionResult> GetTeams([FromQuery] SearchAndPaginationDto input)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var response = await _teamService.GetTeams(input);
+        //    var response = await _teamService.GetTeams(input);
 
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
 
-        [HttpPost]
-        [ProducesResponseType(200, Type = typeof(ApiResponse<ViewTeamDto>))]
-        public async Task<IActionResult> CreateTeam([FromForm] AddTeamDto input)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpPost]
+        //[ProducesResponseType(200, Type = typeof(ApiResponse<ViewTeamDto>))]
+        //public async Task<IActionResult> CreateTeam([FromForm] AddTeamDto input)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var response = await _teamService.CreateTeam(input);
+        //    var response = await _teamService.CreateTeam(input);
 
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
 
-        [HttpGet("{Id}")]
-        [ProducesResponseType(200, Type = typeof(ApiResponse<ViewTeamDto>))]
-        public async Task<IActionResult> GetTeam([FromRoute] int Id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpGet("{Id}")]
+        //[ProducesResponseType(200, Type = typeof(ApiResponse<ViewTeamDto>))]
+        //public async Task<IActionResult> GetTeam([FromRoute] int Id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var response = await _teamService.GetTeam(Id);
+        //    var response = await _teamService.GetTeam(Id);
 
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
 
-        [HttpPut("{Id}")]
-        [ProducesResponseType(200, Type = typeof(ApiResponse<ViewTeamDto>))]
-        public async Task<IActionResult> UpdateTeam([FromRoute] int Id, [FromForm] UpdateTeamDto input)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpPut("{Id}")]
+        //[ProducesResponseType(200, Type = typeof(ApiResponse<ViewTeamDto>))]
+        //public async Task<IActionResult> UpdateTeam([FromRoute] int Id, [FromForm] UpdateTeamDto input)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var response = await _teamService.UpdateTeam(Id, input);
+        //    var response = await _teamService.UpdateTeam(Id, input);
 
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
 
-        [HttpDelete("{Id}")]
-        [ProducesResponseType(200, Type = typeof(ApiResponse<ViewTeamDto>))]
-        public async Task<IActionResult> DeleteTeam([FromRoute] int Id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpDelete("{Id}")]
+        //[ProducesResponseType(200, Type = typeof(ApiResponse<ViewTeamDto>))]
+        //public async Task<IActionResult> DeleteTeam([FromRoute] int Id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var response = await _teamService.DeleteTeam(Id);
+        //    var response = await _teamService.DeleteTeam(Id);
 
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
     }
 }

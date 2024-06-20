@@ -22,162 +22,162 @@ namespace Izki_Club.Services
         }
 
 
-        public async Task<ApiResponse<ViewTeamDto>> CreateTeam(AddTeamDto input)
-        {
-            try
-            {
-                var organization = await _context.Organizations.FirstOrDefaultAsync(o=> o.Id == input.OrganizationId);
+        //public async Task<ApiResponse<ViewTeamDto>> CreateTeam(AddTeamDto input)
+        //{
+        //    try
+        //    {
+        //        var organization = await _context.Organizations.FirstOrDefaultAsync(o=> o.Id == input.OrganizationId);
 
-                if (organization == null)
-                {
-                    return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.NotFound, $"Organization not found", null);
+        //        if (organization == null)
+        //        {
+        //            return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.NotFound, $"Organization not found", null);
 
-                }
+        //        }
 
-                var team = Mapper.TeamDtoToTeam(input);
+        //        var team = Mapper.TeamDtoToTeam(input);
 
-                _context.Teams.Add(team);
+        //        _context.Teams.Add(team);
 
-                await _context.SaveChangesAsync();
+        //        await _context.SaveChangesAsync();
 
-                var teamDto = Mapper.TeamToTeamDto(team);
+        //        var teamDto = Mapper.TeamToTeamDto(team);
 
-                return new ApiResponse<ViewTeamDto>(true, 200, "Member created successfully", teamDto);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse<ViewTeamDto>(false, 500, $"An error occurred in Creatint Person: {ex}", null);
-            }
-        }
+        //        return new ApiResponse<ViewTeamDto>(true, 200, "Member created successfully", teamDto);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ApiResponse<ViewTeamDto>(false, 500, $"An error occurred in Creatint Person: {ex}", null);
+        //    }
+        //}
 
-        public async Task<ApiResponse<ViewTeamDto>> DeleteTeam(int Id)
-        {
-            try
-            {
-                var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == Id);
+        //public async Task<ApiResponse<ViewTeamDto>> DeleteTeam(int Id)
+        //{
+        //    try
+        //    {
+        //        var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == Id);
 
-                if (team == null)
-                {
-                    return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.NotFound, "Team not found", null);
-                }
+        //        if (team == null)
+        //        {
+        //            return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.NotFound, "Team not found", null);
+        //        }
 
-                team.IsDeleted = true;
-                team.UpdatedAt = DateTime.UtcNow;
-                _context.Teams.Update(team);
-                await _context.SaveChangesAsync();
+        //        team.IsDeleted = true;
+        //        team.UpdatedAt = DateTime.UtcNow;
+        //        _context.Teams.Update(team);
+        //        await _context.SaveChangesAsync();
 
-                var teamDto = Mapper.TeamToTeamDto(team);
+        //        var teamDto = Mapper.TeamToTeamDto(team);
 
-                return new ApiResponse<ViewTeamDto>(true, (int)ResponseCodeEnum.Success, "Team deleted successfully", teamDto);
+        //        return new ApiResponse<ViewTeamDto>(true, (int)ResponseCodeEnum.Success, "Team deleted successfully", teamDto);
 
-            }
-            catch(Exception ex)
-            {
-                return new ApiResponse<ViewTeamDto>(false, 500, $"An error occurred in Creatint Person: {ex}", null);
-            }
-        }
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return new ApiResponse<ViewTeamDto>(false, 500, $"An error occurred in Creatint Person: {ex}", null);
+        //    }
+        //}
 
-        public async Task<ApiResponse<ViewTeamDto>> GetTeam(int Id)
-        {
-            try
-            {
-                var team = await _context.Teams.AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
+        //public async Task<ApiResponse<ViewTeamDto>> GetTeam(int Id)
+        //{
+        //    try
+        //    {
+        //        var team = await _context.Teams.AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
 
-                if (team == null)
-                {
-                    return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.NotFound, "Team not found", null);
-                }
+        //        if (team == null)
+        //        {
+        //            return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.NotFound, "Team not found", null);
+        //        }
 
-                var teamDto = Mapper.TeamToTeamDto(team);
+        //        var teamDto = Mapper.TeamToTeamDto(team);
 
-                return new ApiResponse<ViewTeamDto>(true, (int)ResponseCodeEnum.Success, "Team data retrieved successfully", teamDto);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.InternalServerError, $"Error in GetTeam: {ex.Message}", null);
-            }
+        //        return new ApiResponse<ViewTeamDto>(true, (int)ResponseCodeEnum.Success, "Team data retrieved successfully", teamDto);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.InternalServerError, $"Error in GetTeam: {ex.Message}", null);
+        //    }
 
-        }
+        //}
 
-        public async Task<ApiResponse<PaginatedList<ViewTeamDto>>> GetTeams(SearchAndPaginationDto input)
-        {
-            try
-            {
-                var query = _context.Teams.AsNoTracking().AsQueryable();
+        //public async Task<ApiResponse<PaginatedList<ViewTeamDto>>> GetTeams(SearchAndPaginationDto input)
+        //{
+        //    try
+        //    {
+        //        var query = _context.Teams.AsNoTracking().AsQueryable();
 
-                var filteredQuery = FilterQuery(query, input);
+        //        var filteredQuery = FilterQuery(query, input);
 
-                var paginatedList = await GetTeamDtoListPaginated(filteredQuery, input);
+        //        var paginatedList = await GetTeamDtoListPaginated(filteredQuery, input);
 
-                var response = new ApiResponse<PaginatedList<ViewTeamDto>>(true, 200, "Teams data retrieved successfully", paginatedList);
+        //        var response = new ApiResponse<PaginatedList<ViewTeamDto>>(true, 200, "Teams data retrieved successfully", paginatedList);
 
-                return response;
-            }
-            catch (Exception ex)
-            {
-                // Log the exception for further analysis
-                Console.WriteLine($"Error in GetTeams: {ex.Message}");
+        //        return response;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log the exception for further analysis
+        //        Console.WriteLine($"Error in GetTeams: {ex.Message}");
 
-                return new ApiResponse<PaginatedList<ViewTeamDto>>(false, 500, $"Error in GetTeams: {ex.Message}", null);
-            }
-        }
+        //        return new ApiResponse<PaginatedList<ViewTeamDto>>(false, 500, $"Error in GetTeams: {ex.Message}", null);
+        //    }
+        //}
 
-        public async Task<ApiResponse<ViewTeamDto>> UpdateTeam(int Id,UpdateTeamDto input)
-        {
-            try
-            {
-                var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == Id);
+        //public async Task<ApiResponse<ViewTeamDto>> UpdateTeam(int Id,UpdateTeamDto input)
+        //{
+        //    try
+        //    {
+        //        var team = await _context.Teams.FirstOrDefaultAsync(x => x.Id == Id);
 
-                if (team == null)
-                {
-                    return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.NotFound, "Team not found", null);
-                }
+        //        if (team == null)
+        //        {
+        //            return new ApiResponse<ViewTeamDto>(false, (int)ResponseCodeEnum.NotFound, "Team not found", null);
+        //        }
 
-                team.NameAr = input.NameAr;
-                team.NameEn = input.NameEn;
-                team.DescriptionAr = input.DescriptionAr;
-                team.DescriptionEn = input.DescriptionEn;
-                team.IsActive = input.IsActive;
-                team.FoundDate = input.FoundDate;
-                team.ImageUrl = ImageProcess.UploadImage(input.Image);
-                team.UpdatedAt = DateTime.UtcNow;
+        //        team.NameAr = input.NameAr;
+        //        team.NameEn = input.NameEn;
+        //        team.DescriptionAr = input.DescriptionAr;
+        //        team.DescriptionEn = input.DescriptionEn;
+        //        team.IsActive = input.IsActive;
+        //        team.FoundDate = input.FoundDate;
+        //        team.ImageUrl = ImageProcess.UploadImage(input.Image);
+        //        team.UpdatedAt = DateTime.UtcNow;
 
-                await _context.SaveChangesAsync();
+        //        await _context.SaveChangesAsync();
 
-                var teamDto = Mapper.TeamToTeamDto(team);
+        //        var teamDto = Mapper.TeamToTeamDto(team);
 
-                return new ApiResponse<ViewTeamDto>(true, (int)ResponseCodeEnum.Success, "Team updated successfully", teamDto);
+        //        return new ApiResponse<ViewTeamDto>(true, (int)ResponseCodeEnum.Success, "Team updated successfully", teamDto);
 
-            } 
-            catch (Exception ex)
-            {
-                return new ApiResponse<ViewTeamDto>(false, 500, $"An error occurred in Creatint Person: {ex}", null);
-            }
-        }
+        //    } 
+        //    catch (Exception ex)
+        //    {
+        //        return new ApiResponse<ViewTeamDto>(false, 500, $"An error occurred in Creatint Person: {ex}", null);
+        //    }
+        //}
 
-        private IQueryable<Team> FilterQuery(IQueryable<Team> query, SearchAndPaginationDto input)
-        {
+        //private IQueryable<Team> FilterQuery(IQueryable<Team> query, SearchAndPaginationDto input)
+        //{
 
 
-            if (input.Search is not null)
-            {
-                query = query
-                        .Where(t => t.NameAr.Contains(input.Search)
-                                    || t.NameEn.Contains(input.Search));
-            }
+        //    if (input.Search is not null)
+        //    {
+        //        query = query
+        //                .Where(t => t.NameAr.Contains(input.Search)
+        //                            || t.NameEn.Contains(input.Search));
+        //    }
 
-            return query;
-        }
-        private async Task<PaginatedList<ViewTeamDto>> GetTeamDtoListPaginated(IQueryable<Team> query, SearchAndPaginationDto input)
-        {
-            var teamsToReturn =  await query
-                .Skip((input.Page - 1) * input.PageSize)
-                .Take(input.PageSize)
-                .Select(team => Mapper.TeamToTeamDto(team))
-                .ToListAsync();
+        //    return query;
+        //}
+        //private async Task<PaginatedList<ViewTeamDto>> GetTeamDtoListPaginated(IQueryable<Team> query, SearchAndPaginationDto input)
+        //{
+        //    var teamsToReturn =  await query
+        //        .Skip((input.Page - 1) * input.PageSize)
+        //        .Take(input.PageSize)
+        //        .Select(team => Mapper.TeamToTeamDto(team))
+        //        .ToListAsync();
 
-            return new PaginatedList<ViewTeamDto>(teamsToReturn, teamsToReturn.Count(), input.Page, input.PageSize);
-        }
+        //    return new PaginatedList<ViewTeamDto>(teamsToReturn, teamsToReturn.Count(), input.Page, input.PageSize);
+        //}
 
 
     }

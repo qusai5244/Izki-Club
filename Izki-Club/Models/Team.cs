@@ -36,10 +36,8 @@ namespace Izki_Club.Models
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
-        public ICollection<Member> Members { get; set; }
         public int OrganizationId { get; set; }
         public Organization Organization { get; set; }
-
         public ICollection<TournamentTeam> TournamentTeams { get; set; }
     }
 }

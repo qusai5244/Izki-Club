@@ -15,99 +15,63 @@ namespace Izki_Club.Services
     public class MemberService : IMemberService
     {
         private readonly DataContext _context;
-        public MemberService(DataContext context)
+        private readonly IUtilityService _utilityService;
+        public MemberService(DataContext context, IUtilityService utilityService)
         {
             _context = context;
+            _utilityService = utilityService;
         }
-
-        public async Task<ApiResponse<ViewMemberDto>> CreateMember(AddMemberDto input)
+        public async Task<ApiResponse<int>> CreateMember(AddMemberDto input)
         {
             try
             {
 
                 if (input.TeamId is not 0)
                 {
-                    var team = await _context.Teams.AnyAsync(x => x.Id == input.TeamId && !x.IsDeleted);
+                    var team = await _context
+                                     .Teams
+                                     .AnyAsync(x => x.Id == input.TeamId && !x.IsDeleted);
 
                     if (!team)
                     {
-                        return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.NotFound, "Team not found", null);
+                        return new ApiResponse<int>(false, (int)ResponseCodeEnum.NotFound, "Team not found", 0);
                     }
                 }
 
-                var member = Mapper.MemberDtoToMember(input);
+                var member = new Member
+                {
+                    MemberType = input.MemberType,
+                    DateOfBirth = input.DateOfBirth,
+                    NameEn = input.NameEn,
+                    NameAr = input.NameAr,
+                    DescriptionEn = input.DescriptionEn,
+                    DescriptionAr = input.DescriptionAr,
+                    ImageUrl = input.Image,
+                    IsActive = true,
+                    CreatedAt = DateTime.Now,
+                    TeamId = input.TeamId,
+                };
 
                 _context.Members.Add(member);
 
                 await _context.SaveChangesAsync();
 
-                var memberDto = Mapper.MemberToMemberDto(member);
-
-                return new ApiResponse<ViewMemberDto>(true, (int)ResponseCodeEnum.Success, "Member created successfully", memberDto);
+                return new ApiResponse<int>(true, (int)ResponseCodeEnum.Success, "Member created successfully", member.Id);
             }
             catch (Exception ex)
             {
-                return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.InternalServerError, $"An error occurred in Creating Member: {ex}", null);
+                return new ApiResponse<int>(false, (int)ResponseCodeEnum.InternalServerError, $"An error occurred in Creating Member: {ex}", 0);
             }
         }
-
-        public async Task<ApiResponse<ViewMemberDto>> DeleteMember(int id)
-        {
-            try
-            {
-                var member = await _context.Members
-                    .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
-
-                if (member == null)
-                {
-                    return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.NotFound, "Member not found", null);
-                }
-
-                // Soft delete the member by setting IsDeleted to true
-                member.IsDeleted = true;
-
-                // Save changes to the database
-                _context.Members.Update(member);
-                await _context.SaveChangesAsync();
-
-                return new ApiResponse<ViewMemberDto>(true, (int)ResponseCodeEnum.Success, "Member deleted successfully", null);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception for further analysis
-                Console.WriteLine($"An error occurred in Deleting Member: {ex}");
-                return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.InternalServerError, "An error occurred while deleting the member", null);
-            }
-        }
-
-
-        public async Task<ApiResponse<ViewMemberDto>> GetMember(int Id)
-        {
-            try
-            {
-                var member = await _context.Members.FirstOrDefaultAsync(x => x.Id == Id && !x.IsDeleted);
-
-                if (member == null)
-                {
-                    return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.NotFound, "Member not found", null);
-                }
-
-                var memberDto = Mapper.MemberToMemberDto(member);
-
-                return new ApiResponse<ViewMemberDto>(true, (int)ResponseCodeEnum.Success, "Member retrived succssefuly", memberDto);
-
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.InternalServerError, $"An error occurred in Creating Member: {ex}", null);   
-            }
-        }
-
         public async Task<ApiResponse<PaginatedList<ViewMemberDto>>> GetMembers(ViewMembersByType input)
         {
             try
             {
-                var query = _context.Members.Where(x => !x.IsDeleted).AsNoTracking().AsQueryable();
+                var query = _context
+                            .Members
+                            .Where(x => !x.IsDeleted)
+                            .AsNoTracking()
+                            .AsQueryable();
 
                 if (input.Search is not null)
                 {
@@ -121,47 +85,124 @@ namespace Izki_Club.Services
                     query = query.Where(x => x.MemberType == input.memberType);
                 }
 
+                var totalCount = await query.CountAsync();
+
                 var membersToReturn = await query
                     .Skip((input.Page - 1) * input.PageSize)
                     .Take(input.PageSize)
-                    .Select(member => Mapper.MemberToMemberDto(member))
+                    .Select(member => new ViewMemberDto
+                    {
+                        Id = member.Id,
+                        MemberType = member.MemberType.ToString(),
+                        NameEn = member.NameEn,
+                        NameAr = member.NameAr,
+                        DescriptionEn = member.DescriptionEn,
+                        DescriptionAr = member.DescriptionAr,
+                        Image = member.ImageUrl,
+                        IsActive = member.IsActive,
+                        Age = _utilityService.CalculateAge(member.DateOfBirth),
+                        TeamId = member.TeamId,
+                        CreatedAt = member.CreatedAt,
+                        UpdatedAt = member.UpdatedAt,
+                    })
                     .ToListAsync();
 
-                var membersPaginatedList = new PaginatedList<ViewMemberDto>(membersToReturn, membersToReturn.Count(), input.Page, input.PageSize);
+                var membersPaginatedList = new PaginatedList<ViewMemberDto>(membersToReturn, totalCount, input.Page, input.PageSize);
 
                 return new ApiResponse<PaginatedList<ViewMemberDto>>(true, (int)ResponseCodeEnum.Success, "Members retrived succssefuly", membersPaginatedList);
 
-            } 
+            }
             catch (Exception ex)
             {
                 return new ApiResponse<PaginatedList<ViewMemberDto>>(false, (int)ResponseCodeEnum.InternalServerError, $"An error occurred in GetMembers: {ex}", null);
             }
         }
-
-        public async Task<ApiResponse<ViewMemberDto>> UpdateMember(int id, UpdateMemberDto input)
+        public async Task<ApiResponse<ViewMemberDto>> GetMember(int Id)
         {
             try
             {
-                // Retrieve the member with the specified ID that is not deleted
-                var member = await _context.Members.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+                var member = await _context
+                                   .Members
+                                   .FirstOrDefaultAsync(x => x.Id == Id && !x.IsDeleted);
 
                 if (member == null)
                 {
                     return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.NotFound, "Member not found", null);
                 }
 
-                // Check if the team exists and is not deleted
-                var teamExists = await _context.Teams.AnyAsync(x => x.Id == input.TeamId && !x.IsDeleted);
+                var memberDto = new ViewMemberDto
+                {
+                    Id = member.Id,
+                    MemberType = member.MemberType.ToString(),
+                    NameEn = member.NameEn,
+                    NameAr = member.NameAr,
+                    DescriptionEn = member.DescriptionEn,
+                    DescriptionAr = member.DescriptionAr,
+                    Image = member.ImageUrl,
+                    IsActive = member.IsActive,
+                    Age = _utilityService.CalculateAge(member.DateOfBirth),
+                    TeamId = member.TeamId,
+                    CreatedAt = member.CreatedAt,
+                    UpdatedAt = member.UpdatedAt,
+                };
+
+                return new ApiResponse<ViewMemberDto>(true, (int)ResponseCodeEnum.Success, "Member retrived succssefuly", memberDto);
+
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.InternalServerError, $"An error occurred in Creating Member: {ex}", null);
+            }
+        }
+        public async Task<ApiResponse<bool>> DeleteMember(int id)
+        {
+            try
+            {
+                var member = await _context
+                                   .Members
+                                   .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+
+                if (member == null)
+                {
+                    return new ApiResponse<bool>(false, (int)ResponseCodeEnum.NotFound, "Member not found", false);
+                }
+
+                member.IsDeleted = true;
+
+                _context.Members.Update(member);
+                await _context.SaveChangesAsync();
+
+                return new ApiResponse<bool>(true, (int)ResponseCodeEnum.Success, "Member deleted successfully", true);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<bool>(false, (int)ResponseCodeEnum.InternalServerError, "An error occurred while deleting the member", false);
+            }
+        }
+        public async Task<ApiResponse<bool>> UpdateMember(UpdateMemberDto input)
+        {
+            try
+            {
+                var member = await _context
+                                   .Members
+                                   .FirstOrDefaultAsync(x => x.Id == input.Id && !x.IsDeleted);
+
+                if (member == null)
+                {
+                    return new ApiResponse<bool>(false, (int)ResponseCodeEnum.NotFound, "Member not found", false);
+                }
+
+                var teamExists = await _context
+                                       .Teams
+                                       .AnyAsync(x => x.Id == input.TeamId && !x.IsDeleted);
 
                 if (!teamExists)
                 {
-                    return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.NotFound, "Team not found", null);
+                    return new ApiResponse<bool>(false, (int)ResponseCodeEnum.NotFound, "Team not found", false);
                 }
 
-                // Delete the old image after checking if the user is found
                 ImageProcess.DeleteImage(member.ImageUrl);
 
-                // Update user information
                 member.NameAr = input.NameAr;
                 member.NameEn = input.NameEn;
                 member.DescriptionAr = input.DescriptionAr;
@@ -171,22 +212,16 @@ namespace Izki_Club.Services
                 member.TeamId = input.TeamId;
                 member.UpdatedAt = DateTime.Now;
 
-                // Save changes to the database
                 _context.Members.Update(member);
                 await _context.SaveChangesAsync();
 
-                // Return ApiResponse with a success status code and updated player information
-                var updatedMemberDto = Mapper.MemberToMemberDto(member);
-                return new ApiResponse<ViewMemberDto>(true, (int)ResponseCodeEnum.Success, "Member updated successfully", updatedMemberDto);
+                return new ApiResponse<bool>(true, (int)ResponseCodeEnum.Success, "Member updated successfully", true);
             }
             catch (Exception ex)
             {
-                // Log the exception for further analysis
-                Console.WriteLine($"An error occurred in Update Member: {ex}");
-                return new ApiResponse<ViewMemberDto>(false, (int)ResponseCodeEnum.InternalServerError, "An error occurred while updating the member", null);
+                return new ApiResponse<bool>(false, (int)ResponseCodeEnum.InternalServerError, "An error occurred while updating the member", false);
             }
         }
-
 
     }
 }

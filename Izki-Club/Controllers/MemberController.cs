@@ -21,57 +21,33 @@ namespace Izki_Club.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200, Type = typeof(ApiResponse<ViewMemberDto>))]
         public async Task<IActionResult> CreateMember([FromForm] AddMemberDto input)
         {
-            var response = await _memberService.CreateMember(input);
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var response = await _memberService.CreateMember(input);
 
             return Ok(response);
         }
+
+
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(ApiResponse<PaginatedList<ViewMemberDto>>))]
         public async Task<IActionResult> GetMembers([FromQuery] ViewMembersByType input)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var response = await _memberService.GetMembers(input);
 
             return Ok(response);
         }
 
+
         [HttpGet("{Id}")]
-        [ProducesResponseType(200, Type = typeof(ApiResponse<ViewMemberDto>))]
-        public async Task<IActionResult> GetMember([FromRoute]int Id)
+        public async Task<IActionResult> GetMember([FromRoute] int Id)
         {
             var response = await _memberService.GetMember(Id);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Ok(response);
-        }
-
-        [HttpPut("{Id}")]
-        [ProducesResponseType(200, Type = typeof(ApiResponse<ViewMemberDto>))]
-        public async Task<IActionResult> UpdateMember([FromRoute] int Id, [FromForm] UpdateMemberDto input)
-        {
-            var response = await _memberService.UpdateMember(Id, input);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             return Ok(response);
         }
@@ -90,6 +66,18 @@ namespace Izki_Club.Controllers
             return Ok(response);
         }
 
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> UpdateMember([FromForm] UpdateMemberDto input)
+        {
+            var response = await _memberService.UpdateMember(input);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(response);
+        }
 
     }
 }

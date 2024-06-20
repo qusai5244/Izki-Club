@@ -7,10 +7,10 @@ namespace Izki_Club.Services.Interfaces
 {
     public interface ITeamService
     {
-        Task<ApiResponse<PaginatedList<ViewTeamDto>>> GetTeams(SearchAndPaginationDto input);
-        Task<ApiResponse<ViewTeamDto>> GetTeam(int Id);
-        Task<ApiResponse<ViewTeamDto>> CreateTeam(AddTeamDto input);
-        Task<ApiResponse<ViewTeamDto>> UpdateTeam(int Id, UpdateTeamDto input);
-        Task<ApiResponse<ViewTeamDto>> DeleteTeam(int Id);
+        //Task<ApiResponse<PaginatedList<ViewTeamDto>>> GetTeams(SearchAndPaginationDto input);
+        //Task<ApiResponse<ViewTeamDto>> GetTeam(int Id);
+        //Task<ApiResponse<ViewTeamDto>> CreateTeam(AddTeamDto input);
+        //Task<ApiResponse<ViewTeamDto>> UpdateTeam(int Id, UpdateTeamDto input);
+        //Task<ApiResponse<ViewTeamDto>> DeleteTeam(int Id);
     }
 }
