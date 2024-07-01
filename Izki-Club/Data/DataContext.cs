@@ -14,6 +14,10 @@ namespace Izki_Club.Data
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }
         public DbSet<TournamentTeam> TournamentTeams { get; set; }
+        public DbSet<Match> Matchs { get; set; }
+        public DbSet<MatchReferee> MatchReferees { get; set; }
+        public DbSet<MatchTeam> MatchTeams { get; set; }
+        public DbSet<MatchTeamPlayer> MatchTeamPlayers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,6 +49,15 @@ namespace Izki_Club.Data
                 .WithMany(g => g.TournamentTeams)
                 .HasForeignKey(s => s.TeamId)
                 .IsRequired();
+
+            modelBuilder.Entity<Member>()
+                .HasQueryFilter(m => !m.IsDeleted);
+
+            modelBuilder.Entity<MatchTeamPlayer>()
+                .HasQueryFilter(mtp => !mtp.Member.IsDeleted);
+
+            modelBuilder.Entity<MatchReferee>()
+                .HasQueryFilter(mr => !mr.Referee.IsDeleted);
         }
     }
 }

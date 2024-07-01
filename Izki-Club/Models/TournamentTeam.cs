@@ -14,5 +14,7 @@ namespace Izki_Club.Models
         public Team Team { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+        public ICollection<MatchTeam> Teams { get; set; }
+
     }
 }

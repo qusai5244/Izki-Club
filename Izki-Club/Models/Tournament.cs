@@ -38,7 +38,7 @@ namespace Izki_Club.Models
         public Organization Organization { get; set; }
 
         public ICollection<TournamentTeam> TournamentTeams { get; set; }
-
+        public ICollection<Match> Matches { get; set; }
 
     }
 }
