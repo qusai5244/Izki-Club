@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static Izki_Club.Enums.Tournament.TournamentEnum;
-
 namespace Izki_Club.Models
 {
     public class Tournament
@@ -29,16 +27,20 @@ namespace Izki_Club.Models
         [Required]
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public TournamentStatus tournamentStatus { get; set; } = TournamentStatus.Upcoming;
+        public TournamentStatus Status { get; set; } = TournamentStatus.Upcoming;
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         [Required]
         public int OrganizationId { get; set; }
         public Organization Organization { get; set; }
-
         public ICollection<TournamentTeam> TournamentTeams { get; set; }
+    }
 
-
+    public enum TournamentStatus
+    {
+        Upcoming = 1,
+        Active,
+        Finished
     }
 }

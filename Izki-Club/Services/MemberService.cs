@@ -30,7 +30,7 @@ namespace Izki_Club.Services
                 {
                     var team = await _context
                                      .Teams
-                                     .AnyAsync(x => x.Id == input.TeamId && !x.IsDeleted);
+                                     .AnyAsync(x => x.Id == input.TeamId && x.Status != TeamStatus.Deleted);
 
                     if (!team)
                     {
@@ -40,14 +40,13 @@ namespace Izki_Club.Services
 
                 var member = new Member
                 {
-                    MemberType = input.MemberType,
+                    Type = input.MemberType,
                     DateOfBirth = input.DateOfBirth,
                     NameEn = input.NameEn,
                     NameAr = input.NameAr,
                     DescriptionEn = input.DescriptionEn,
                     DescriptionAr = input.DescriptionAr,
                     ImageUrl = input.Image,
-                    IsActive = true,
                     CreatedAt = DateTime.Now,
                     TeamId = input.TeamId,
                 };
@@ -69,7 +68,7 @@ namespace Izki_Club.Services
             {
                 var query = _context
                             .Members
-                            .Where(x => !x.IsDeleted)
+                            .Where(x => x.Status != MemberStatus.Deleted)
                             .AsNoTracking()
                             .AsQueryable();
 
@@ -82,7 +81,7 @@ namespace Izki_Club.Services
 
                 if (input.memberType is not 0)
                 {
-                    query = query.Where(x => x.MemberType == input.memberType);
+                    query = query.Where(x => x.Type == input.memberType);
                 }
 
                 var totalCount = await query.CountAsync();
@@ -93,15 +92,14 @@ namespace Izki_Club.Services
                     .Select(member => new ViewMemberDto
                     {
                         Id = member.Id,
-                        MemberType = member.MemberType.ToString(),
+                        MemberType = member.Type.ToString(),
                         NameEn = member.NameEn,
                         NameAr = member.NameAr,
                         DescriptionEn = member.DescriptionEn,
                         DescriptionAr = member.DescriptionAr,
                         Image = member.ImageUrl,
-                        IsActive = member.IsActive,
                         Age = _utilityService.CalculateAge(member.DateOfBirth),
-                        TeamId = member.TeamId,
+                        TeamId = (int)member.TeamId,
                         CreatedAt = member.CreatedAt,
                         UpdatedAt = member.UpdatedAt,
                     })
@@ -123,7 +121,7 @@ namespace Izki_Club.Services
             {
                 var member = await _context
                                    .Members
-                                   .FirstOrDefaultAsync(x => x.Id == Id && !x.IsDeleted);
+                                   .FirstOrDefaultAsync(x => x.Id == Id && x.Status != MemberStatus.Deleted);
 
                 if (member == null)
                 {
@@ -133,15 +131,14 @@ namespace Izki_Club.Services
                 var memberDto = new ViewMemberDto
                 {
                     Id = member.Id,
-                    MemberType = member.MemberType.ToString(),
+                    MemberType = member.Type.ToString(),
                     NameEn = member.NameEn,
                     NameAr = member.NameAr,
                     DescriptionEn = member.DescriptionEn,
                     DescriptionAr = member.DescriptionAr,
                     Image = member.ImageUrl,
-                    IsActive = member.IsActive,
                     Age = _utilityService.CalculateAge(member.DateOfBirth),
-                    TeamId = member.TeamId,
+                    TeamId = (int)member.TeamId,
                     CreatedAt = member.CreatedAt,
                     UpdatedAt = member.UpdatedAt,
                 };
@@ -160,14 +157,14 @@ namespace Izki_Club.Services
             {
                 var member = await _context
                                    .Members
-                                   .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+                                   .FirstOrDefaultAsync(x => x.Id == id && x.Status != MemberStatus.Deleted);
 
                 if (member == null)
                 {
                     return new ApiResponse<bool>(false, (int)ResponseCodeEnum.NotFound, "Member not found", false);
                 }
 
-                member.IsDeleted = true;
+                member.Status = MemberStatus.Deleted;
 
                 _context.Members.Update(member);
                 await _context.SaveChangesAsync();
@@ -185,7 +182,7 @@ namespace Izki_Club.Services
             {
                 var member = await _context
                                    .Members
-                                   .FirstOrDefaultAsync(x => x.Id == input.Id && !x.IsDeleted);
+                                   .FirstOrDefaultAsync(x => x.Id == input.Id && x.Status != MemberStatus.Deleted);
 
                 if (member == null)
                 {
@@ -194,7 +191,7 @@ namespace Izki_Club.Services
 
                 var teamExists = await _context
                                        .Teams
-                                       .AnyAsync(x => x.Id == input.TeamId && !x.IsDeleted);
+                                       .AnyAsync(x => x.Id == input.TeamId && x.Status != TeamStatus.Deleted);
 
                 if (!teamExists)
                 {
