@@ -18,18 +18,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionPc"));
         //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionPc"));
+        //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionPc"));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionOnline"));
     });
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
