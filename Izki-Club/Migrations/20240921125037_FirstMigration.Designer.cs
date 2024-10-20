@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Izki_Club.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240620190951_first_migration")]
-    partial class first_migration
+    [Migration("20240921125037_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,19 +45,10 @@ namespace Izki_Club.Migrations
 
                     b.Property<string>("DescriptionEn")
                         .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MemberType")
-                        .HasColumnType("int");
 
                     b.Property<string>("NameAr")
                         .IsRequired()
@@ -67,15 +58,23 @@ namespace Izki_Club.Migrations
                     b.Property<string>("NameEn")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Members");
                 });
@@ -102,12 +101,6 @@ namespace Izki_Club.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("NameAr")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -117,6 +110,9 @@ namespace Izki_Club.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(255)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -151,12 +147,6 @@ namespace Izki_Club.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("NameAr")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -168,6 +158,9 @@ namespace Izki_Club.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -221,11 +214,11 @@ namespace Izki_Club.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("tournamentStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -261,6 +254,15 @@ namespace Izki_Club.Migrations
                     b.HasIndex("TournamentId");
 
                     b.ToTable("TournamentTeams");
+                });
+
+            modelBuilder.Entity("Izki_Club.Models.Member", b =>
+                {
+                    b.HasOne("Izki_Club.Models.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Team", b =>

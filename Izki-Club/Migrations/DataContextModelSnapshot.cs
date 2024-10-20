@@ -240,19 +240,10 @@ namespace Izki_Club.Migrations
 
                     b.Property<string>("DescriptionEn")
                         .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("MemberType")
-                        .HasColumnType("int");
 
                     b.Property<string>("NameAr")
                         .IsRequired()
@@ -262,9 +253,15 @@ namespace Izki_Club.Migrations
                     b.Property<string>("NameEn")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -272,7 +269,9 @@ namespace Izki_Club.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Members", (string)null);
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Organization", b =>
@@ -297,12 +296,6 @@ namespace Izki_Club.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("NameAr")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -312,6 +305,9 @@ namespace Izki_Club.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(255)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -381,12 +377,6 @@ namespace Izki_Club.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("NameAr")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -398,6 +388,9 @@ namespace Izki_Club.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -451,11 +444,11 @@ namespace Izki_Club.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("tournamentStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -618,6 +611,15 @@ namespace Izki_Club.Migrations
                         .IsRequired();
 
                     b.Navigation("Match");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("Izki_Club.Models.Member", b =>
+                {
+                    b.HasOne("Izki_Club.Models.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId");
 
                     b.Navigation("Team");
                 });

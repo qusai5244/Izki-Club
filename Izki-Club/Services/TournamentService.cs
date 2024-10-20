@@ -77,7 +77,7 @@ namespace Izki_Club.Services
                 if (input.TournamentStatus.HasValue)
                 {
                     query = query
-                            .Where(t => t.tournamentStatus == input.TournamentStatus);
+                            .Where(t => t.Status == input.TournamentStatus);
                 }
 
                 var totalCount = await query.CountAsync();
@@ -94,7 +94,7 @@ namespace Izki_Club.Services
                                             DescriptionEn = t.DescriptionEn,
                                             StartDate = t.StartDate,
                                             EndDate = t.EndDate,
-                                            tournamentStatus = t.tournamentStatus,
+                                            Status = t.Status,
                                             ImageUrl = t.ImageUrl,
                                             CreatedAt = t.CreatedAt,
                                             UpdatedAt = t.UpdatedAt,
@@ -129,7 +129,7 @@ namespace Izki_Club.Services
                                             DescriptionEn = t.DescriptionEn,
                                             StartDate = t.StartDate,
                                             EndDate = t.EndDate,
-                                            tournamentStatus = t.tournamentStatus,
+                                            Status = t.Status,
                                             ImageUrl = t.ImageUrl,
                                             CreatedAt = t.CreatedAt,
                                             UpdatedAt = t.UpdatedAt,

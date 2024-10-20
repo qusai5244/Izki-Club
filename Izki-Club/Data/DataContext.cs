@@ -25,9 +25,6 @@ namespace Izki_Club.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Member>()
-                .HasQueryFilter(m => !m.IsDeleted);
-
             modelBuilder.Entity<Team>()
                 .HasOne(s => s.Organization)
                 .WithMany(g => g.Teams)

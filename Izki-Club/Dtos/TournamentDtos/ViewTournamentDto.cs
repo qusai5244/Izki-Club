@@ -1,6 +1,7 @@
 ﻿using Izki_Club.Models;
 using static Izki_Club.Enums.Tournament.TournamentEnum;
 using System.ComponentModel.DataAnnotations;
+using TournamentStatus = Izki_Club.Models.TournamentStatus;
 
 namespace Izki_Club.Dtos.TournamentDtos
 {
@@ -13,7 +14,7 @@ namespace Izki_Club.Dtos.TournamentDtos
         public string DescriptionAr { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public TournamentStatus tournamentStatus { get; set; }
+        public TournamentStatus Status { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }

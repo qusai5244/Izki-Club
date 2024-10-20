@@ -1,5 +1,5 @@
 ﻿using Izki_Club.Dtos.GeneralDtos;
-using static Izki_Club.Enums.Tournament.TournamentEnum;
+using Izki_Club.Models;
 
 namespace Izki_Club.Dtos.TournamentDtos
 {

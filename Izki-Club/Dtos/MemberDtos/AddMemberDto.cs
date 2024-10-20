@@ -1,7 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Izki_Club.Models;
 using System.ComponentModel.DataAnnotations;
-using Izki_Club.Dtos.baseDtos;
-using static Izki_Club.Enums.Member.MemberTypeEnum;
 
 namespace Izki_Club.Dtos.PlayerDtos
 {

@@ -87,8 +87,6 @@ namespace Izki_Club.Services
                     NameAr = organisation.NameAr,
                     DescriptionEn = organisation.DescriptionEn,
                     DescriptionAr = organisation.DescriptionAr,
-                    IsActive = organisation.IsActive,
-                    IsDeleted = organisation.IsDeleted,
                     ImageUrl = organisation.ImageUrl,
                     CreatedAt = organisation.CreatedAt,
                     UpdatedAt = organisation.UpdatedAt,
