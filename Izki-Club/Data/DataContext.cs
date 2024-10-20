@@ -18,6 +18,9 @@ namespace Izki_Club.Data
         public DbSet<MatchReferee> MatchReferees { get; set; }
         public DbSet<MatchTeam> MatchTeams { get; set; }
         public DbSet<MatchTeamPlayer> MatchTeamPlayers { get; set; }
+        public DbSet<Goal> Goals { get; set; }
+        public DbSet<Card> Cards { get; set; }
+        public DbSet<MatchTeamPlayer> Penality { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

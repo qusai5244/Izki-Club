@@ -54,7 +54,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("Card");
+                    b.ToTable("Card", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Goal", b =>
@@ -97,7 +97,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("Goal");
+                    b.ToTable("Goal", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Match", b =>
@@ -140,7 +140,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("TournamentId");
 
-                    b.ToTable("Matchs");
+                    b.ToTable("Matchs", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.MatchReferee", b =>
@@ -163,7 +163,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("RefereeId");
 
-                    b.ToTable("MatchReferees");
+                    b.ToTable("MatchReferees", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.MatchTeam", b =>
@@ -191,7 +191,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("TournamentTeamId");
 
-                    b.ToTable("MatchTeams");
+                    b.ToTable("MatchTeams", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.MatchTeamPlayer", b =>
@@ -217,7 +217,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("MatchTeamPlayers");
+                    b.ToTable("MatchTeamPlayers", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Member", b =>
@@ -272,7 +272,7 @@ namespace Izki_Club.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Members");
+                    b.ToTable("Members", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Organization", b =>
@@ -318,7 +318,7 @@ namespace Izki_Club.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Organizations");
+                    b.ToTable("Organizations", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Penality", b =>
@@ -353,7 +353,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Penality");
+                    b.ToTable("Penality", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Team", b =>
@@ -407,7 +407,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Teams", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Tournament", b =>
@@ -461,7 +461,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Tournaments");
+                    b.ToTable("Tournaments", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.TournamentTeam", b =>
@@ -490,7 +490,7 @@ namespace Izki_Club.Migrations
 
                     b.HasIndex("TournamentId");
 
-                    b.ToTable("TournamentTeams");
+                    b.ToTable("TournamentTeams", (string)null);
                 });
 
             modelBuilder.Entity("Izki_Club.Models.Card", b =>
