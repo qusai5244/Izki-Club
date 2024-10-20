@@ -50,14 +50,6 @@ namespace Izki_Club.Data
                 .HasForeignKey(s => s.TeamId)
                 .IsRequired();
 
-            modelBuilder.Entity<Member>()
-                .HasQueryFilter(m => !m.IsDeleted);
-
-            modelBuilder.Entity<MatchTeamPlayer>()
-                .HasQueryFilter(mtp => !mtp.Member.IsDeleted);
-
-            modelBuilder.Entity<MatchReferee>()
-                .HasQueryFilter(mr => !mr.Referee.IsDeleted);
         }
     }
 }
